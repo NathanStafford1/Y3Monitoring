@@ -322,6 +322,23 @@ print(the_best_student)
 
 print(square(5))
 
+# region Higher Order Functions
+numbers = [1, 2, 3, 4, 5, 6]
+print(numbers)
+
+def even_or_odd(number):
+    return number % 2 == 0
+
+
+print(list(filter(even_or_odd, numbers)))
+# endregion
+
+# region Lambda Functions
+# Lambda, anonymous function, used once
+print(list(filter(lambda num: num % 2 == 0, numbers)))
+
+# endregion
+
 
 
 
