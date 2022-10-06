@@ -9,10 +9,10 @@
   </tr>
   </thead>
   <tbody>
-  {% for name in registrants %}
+  {% for registrant in registrants %}
   <tr>
-    <td>{{name}}</td>
-    <td>{{registrants[name]}}</td>
+    <td>{{registrant[1]}}</td>
+    <td>{{registrant[2]}}</td>
   </tr>
   {% endfor %}
   </tbody>
