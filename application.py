@@ -1,14 +1,17 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
+from flask_session import Session
 import os
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
 
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = os.getenv("MYSQL_USER")
-app.config['MYSQL_PASSWORD'] = os.getenv("MYSQL_PASSWORD")
-app.config['MYSQL_DB'] = 'sd3a_registrants_23'
+app.config['MYSQL_USER'] = "root"
+app.config['MYSQL_PASSWORD'] = ""
+app.config['MYSQL_DB'] = 'y3monitoring'
 
 app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
 app.config["MAIL_PASSWORD"] = os.getenv("GMAIL_APP_PASSWORD")
@@ -19,45 +22,58 @@ app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 
 mail = Mail(app)
 
-
 mysql = MySQL(app)
-
-SPORTS = ["Basketball", "Soccer", "Tennis", "Snooker"]
+Session(app)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        return render_template("index.html", sports=SPORTS)
+        return render_template("index.html")
     elif request.method == "POST":
-        return render_template("greet.html", name=request.form.get("name", "world"))
+        return render_template("greet.html")
 
+@app.route("/login", methods=["GET","POST"])
+def login():
+    message = ''
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
+        email = request.form['email']
+        password = request.form['password']
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM users WHERE email = %s AND password = %s', (email, password,))
+        user = cursor.fetchone()
+        if user:
+            message = 'Logged in successfully !'
+            return render_template('error.html', message=message)
+        else:
+            message = 'Incorrect email / password !'
+    return render_template('error.html', message = message)
 
-@app.route("/register", methods=["POST"])
+@app.route('/register', methods =['GET', 'POST'])
 def register():
-    email = request.form.get("email")
-    if not email:
-        return render_template("error.html", message="Missing email")
-    sport = request.form.get("sport")
-    if not sport:
-        return render_template("error.html", message="Missing sport")
-    if sport not in SPORTS:
-        return render_template("error.html", message="Stop hacking my site")
-    cursor = mysql.connection.cursor()
-    cursor.execute('''insert into registrants(name, sport) values (%s, %s)''', (email, sport))
-    mysql.connection.commit()
-    cursor.close()
-    message = Message("You are registered", recipients=[email])
-    mail.send(message)
-    return redirect("/registrants")
+    message = ''
+    if request.method == 'POST' and 'password' in request.form and 'email' in request.form:
+        password = request.form['password']
+        email = request.form['email']
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM users WHERE email = % s', (email,))
+        user = cursor.fetchone()
+        if user:
+            message = 'Account exists!'
+        elif not password or not email:
+            message = 'Please fill out form!'
+        else:
+            cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (email, password))
+            mysql.connection.commit()
+            cursor.close()
+            message = 'You have registered!'
+    elif request.method == 'POST':
+        message = 'Please fill out form!'
+    return render_template('error.html', message = message)
 
-
-@app.route("/registrants")
-def registrants():
-    cur = mysql.connection.cursor()
-    cur.execute("select * from registrants")
-    registrants = cur.fetchall()
-    return render_template("registrants.html", registrants=registrants)
-
+@app.route("/logout")
+def logout():
+    # session["email"] = None
+    return redirect("/")
 
 if __name__ == '__main__':
     app.run()

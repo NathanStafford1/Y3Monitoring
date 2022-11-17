@@ -2,13 +2,15 @@
 {% block body %}
 <h1>Register</h1>
 <form action = "/register" method="post">
-    <input autocomplete="off" autofocus placeholder="Email" name="email" type="text">
-    <select name="sport">
-        <option disabled selected value="">Sport</option>
-        {% for sport in sports%}
-        <option value="{{sport}}">{{sport}}</option>
-        {% endfor %}
-    </select>
+    <input autocomplete="off" autofocus placeholder="Email" name="email" type="email">
+    <input autocomplete="off" autofocus placeholder="Password" name="password" type="password">
     <input type="submit" value="Register">
+</form>
+
+<h2>Login</h2>
+<form action = "/login" method="post">
+    <input autocomplete="off" autofocus placeholder="Email" name="email" type="email">
+    <input autocomplete="off" autofocus placeholder="Password" name="password" type="password">
+    <input type="submit" value="Login">
 </form>
 {% endblock %}
