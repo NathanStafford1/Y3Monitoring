@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 from flask_session import Session
 import os
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -42,8 +43,11 @@ def login():
         cursor.execute('SELECT * FROM users WHERE email = %s AND password = %s', (email, password,))
         user = cursor.fetchone()
         if user:
-            message = 'Logged in successfully !'
-            return render_template('error.html', message=message)
+            password_rs = user['password']
+            print(password_rs)
+            if check_password_hash(password_rs, password):
+                message = 'Logged in successfully !'
+                return render_template('error.html', message=message)
         else:
             message = 'Incorrect email / password !'
     return render_template('error.html', message = message)
@@ -53,6 +57,7 @@ def register():
     message = ''
     if request.method == 'POST' and 'password' in request.form and 'email' in request.form:
         password = request.form['password']
+        _hashed_password = generate_password_hash(password)
         email = request.form['email']
         cursor = mysql.connection.cursor()
         cursor.execute('SELECT * FROM users WHERE email = % s', (email,))
