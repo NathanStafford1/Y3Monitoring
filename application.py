@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 from flask_session import Session
+import bcrypt
 import os
 
 app = Flask(__name__)
@@ -39,14 +40,15 @@ def login():
         email = request.form['email']
         password = request.form['password']
         cursor = mysql.connection.cursor()
+        #password = bcrypt.hashpw(password.encode('utf-8'), salt)
         cursor.execute('SELECT * FROM users WHERE email = %s AND password = %s', (email, password,))
         user = cursor.fetchone()
         if user:
             message = 'Logged in successfully !'
-            return render_template('error.html', message=message)
+            return render_template('message.html', message=message)
         else:
             message = 'Incorrect email / password !'
-    return render_template('error.html', message = message)
+    return render_template('message.html', message = message)
 
 @app.route('/register', methods =['GET', 'POST'])
 def register():
@@ -62,13 +64,15 @@ def register():
         elif not password or not email:
             message = 'Please fill out form!'
         else:
+            # Hashing the password
+            # password = bcrypt.hashpw(password.encode('utf-8'), salt)
             cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (email, password))
             mysql.connection.commit()
             cursor.close()
             message = 'You have registered!'
     elif request.method == 'POST':
         message = 'Please fill out form!'
-    return render_template('error.html', message = message)
+    return render_template('message.html', message = message)
 
 @app.route("/logout")
 def logout():
