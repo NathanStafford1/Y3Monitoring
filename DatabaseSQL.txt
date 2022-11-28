@@ -7,3 +7,22 @@ create TABLE motions(motion_id int,motion_sensor_id int,motion_number int, motio
 create table camera_captures(picture_id int, camera_id int, picture_time time, picture_date date, PRIMARY KEY(picture_id), FOREIGN KEY(camera_id) REFERENCES camera(camera_id));
 create table sound_sensor(sound_sensor_id int, location varchar(30), PRIMARY KEY(sound_sensor_id));
 create table sounds(sound_id int, sound_sensor_id int, sound_time time, sound_date date, primary key(sound_id), FOREIGN KEY(sound_sensor_id) REFERENCES sound_sensor(sound_sensor_id));
+
+#Camera#
+INSERT INTO `camera`(`camera_id`, `location`) VALUES ('1','Living Room');
+
+#Camera sample data#
+INSERT INTO `camera_captures`(`picture_id`, `camera_id`,`picture`, `picture_time`, `picture_date`) VALUES ('1','1','19:33:26','2022:11:14');
+INSERT INTO `camera_captures`(`picture_id`, `camera_id`,`picture`, `picture_time`, `picture_date`) VALUES ('2','1','20:01:28','2022:11:14');
+INSERT INTO `camera_captures`(`picture_id`, `camera_id`,`picture`, `picture_time`, `picture_date`) VALUES ('3','1','20:30:11','2022:11:14');
+
+#Motion Sensor#
+INSERT INTO `motion_sensor`(`motion_sensor_id`, `location`) VALUES ('1','Living Room');
+
+#Motion sample data#
+INSERT INTO `motions`(`motion_id`, `motion_sensor_id`, `motion_number`, `motion_time`, `motion_date`) VALUES ('1','1','19:33:26','2022:11:14');
+INSERT INTO `motions`(`motion_id`, `motion_sensor_id`, `motion_number`, `motion_time`, `motion_date`) VALUES ('2','1','20:01:28','2022:11:14');
+INSERT INTO `motions`(`motion_id`, `motion_sensor_id`, `motion_number`, `motion_time`, `motion_date`) VALUES ('3','1','20:30:11','2022:11:14');
+
+#Sound Sensor#
+INSERT INTO `sound_sensor`(`sound_sensor_id`, `location`) VALUES ('1','Living Room');
