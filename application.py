@@ -46,16 +46,16 @@ def login():
         user = cursor.fetchone()
 
         if user:
-            hashed = user['password']
-            bcrypt.checkpw(password, hashed);
+            # hashed = user['password']
+            # bcrypt.checkpw(password, hashed);
             message = 'Logged in successfully !'
-            return render_template('message.html', message=message)
+            return render_template('index.html')
         else:
             message = 'Incorrect email / password !'
     return render_template('login.html', message = message)
 
 
-@app.route('/signup', methods =['GET', 'POST'])
+@app.route('/register', methods =['GET', 'POST'])
 def register():
     message = ''
     if request.method == 'POST' and 'password' in request.form and 'email' in request.form:
@@ -66,41 +66,44 @@ def register():
         user = cursor.fetchone()
         if user:
             message = 'Account exists!'
+            return render_template('signup.html', message=message)
         elif not password or not email:
             message = 'Please fill out form!'
+            return render_template('signup.html', message=message)
         else:
             # Hashing the password
-            salt = bcrypt.gensalt()
-            password = bcrypt.hashpw(password.encode('utf-8'), salt)
+            # salt = bcrypt.gensalt()
+            # password = bcrypt.hashpw(password.encode('utf-8'), salt)
             cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (email, password))
             mysql.connection.commit()
             cursor.close()
             message = 'You have registered!'
+            return render_template('index.html', message=message)
     elif request.method == 'POST':
         message = 'Please fill out form!'
     return render_template('signup.html', message = message)
 
-@app.route('/forgotPassword', methods =['GET', 'POST'])
-def forgotPassword():
-    message = ''
-    if request.method == 'POST' and 'password' in request.form and 'email' in request.form:
-        password = request.form['password']
-        email = request.form['email']
-        cursor = mysql.connection.cursor()
-        cursor.execute('SELECT * FROM users WHERE email = % s', (email,))
-        user = cursor.fetchone()
-        if user:
-            message = 'Account exists!'
-        elif not password or not email:
-            message = 'Please fill out form!'
-        else:
-            cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (email, password))
-            mysql.connection.commit()
-            cursor.close()
-            message = 'You have registered!'
-    elif request.method == 'POST':
-        message = 'Please fill out form!'
-    return render_template('message.html', message = message)
+# @app.route('/forgotPassword', methods =['GET', 'POST'])
+# def forgotPassword():
+#     message = ''
+#     if request.method == 'POST' and 'password' in request.form and 'email' in request.form:
+#         password = request.form['password']
+#         email = request.form['email']
+#         cursor = mysql.connection.cursor()
+#         cursor.execute('SELECT * FROM users WHERE email = % s', (email,))
+#         user = cursor.fetchone()
+#         if user:
+#             message = 'Account exists!'
+#         elif not password or not email:
+#             message = 'Please fill out form!'
+#         else:
+#             cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (email, password))
+#             mysql.connection.commit()
+#             cursor.close()
+#             message = 'You have registered!'
+#     elif request.method == 'POST':
+#         message = 'Please fill out form!'
+#     return render_template('message.html', message = message)
 
 @app.route('/addCamera', methods =['GET', 'POST'])
 def addCamera():
