@@ -49,7 +49,7 @@ def login():
             # hashed = user['password']
             # bcrypt.checkpw(password, hashed);
             message = 'Logged in successfully !'
-            return render_template('index.html')
+            return render_template('logged_in.html')
         else:
             message = 'Incorrect email / password !'
     return render_template('login.html', message = message)
@@ -78,7 +78,7 @@ def register():
             mysql.connection.commit()
             cursor.close()
             message = 'You have registered!'
-            return render_template('index.html', message=message)
+            return render_template('logged_in.html', message=message)
     elif request.method == 'POST':
         message = 'Please fill out form!'
     return render_template('signup.html', message = message)
@@ -125,11 +125,11 @@ def addCamera():
             message = 'You have added the camera!'
     elif request.method == 'POST':
         message = 'Please fill out form!'
-    return render_template('message.html', message = message)
+    return render_template('index.html', message = message)
 
 @app.route("/logout")
 def logout():
-    return render_template("/index.html")
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run()
