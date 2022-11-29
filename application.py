@@ -52,10 +52,10 @@ def login():
             return render_template('message.html', message=message)
         else:
             message = 'Incorrect email / password !'
-    return render_template('message.html', message = message)
+    return render_template('login.html', message = message)
 
 
-@app.route('/register', methods =['GET', 'POST'])
+@app.route('/signup', methods =['GET', 'POST'])
 def register():
     message = ''
     if request.method == 'POST' and 'password' in request.form and 'email' in request.form:
@@ -78,7 +78,7 @@ def register():
             message = 'You have registered!'
     elif request.method == 'POST':
         message = 'Please fill out form!'
-    return render_template('message.html', message = message)
+    return render_template('signup.html', message = message)
 
 @app.route('/forgotPassword', methods =['GET', 'POST'])
 def forgotPassword():
