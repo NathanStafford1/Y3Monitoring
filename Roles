@@ -1,0 +1,17 @@
+Tanish's Roles :
+    - Working on motion and connecting it to PUB nub.
+    - Motion sensor detects motion once the person moves in a room and sends it to database.
+
+John's Roles :
+    - Working on motion and connecting it to PUB nub.
+    - Debugging the errors occurred in motion sensor.
+
+Nathans's Roles :
+    - Creating database which connect to application backend server.
+    - Help in integrating login and registering on web application.
+    - Hosting and connecting the application with AWS and hosting on URL
+
+David's Roles :
+    - Designing the web application.
+    - Integrating motion sensor code and testing it.
+    - Integrating web application and updating the web page design.
