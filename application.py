@@ -1,32 +1,14 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_mysqldb import MySQL
-from flask_mail import Mail, Message
-from flask_session import Session
-from werkzeug.security import generate_password_hash, check_password_hash
-import bcrypt
-import re
-import os
 
 app = Flask(__name__)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = "root"
 app.config['MYSQL_PASSWORD'] = ""
 app.config['MYSQL_DB'] = 'y3monitoring'
 
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
-app.config["MAIL_PASSWORD"] = os.getenv("GMAIL_APP_PASSWORD")
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
-
-mail = Mail(app)
-
 mysql = MySQL(app)
-Session(app)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
