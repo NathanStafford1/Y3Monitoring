@@ -5,6 +5,41 @@ let pubnub;
 
 //Rewrite using the fetch api
 
+const setupPubNub = () =>{
+    pubnub = new PubNub({
+        publishKey: 'pub-c-0abc1efe-4b78-4cdc-a195-fc1ebc33eaac',
+        subscribeKey: 'sub-c-6ed21369-a5b3-4a8b-b9a6-3a225ce51275',
+        userId: "david"
+    });
+
+    const listener = {
+        status: (statusEvent) => {
+            if(statusEvent.category === "PNConnectedCategory"){
+                console.log("Connected");
+            }
+        },
+        message: (messageEvent) => {
+            console.log(messageEvent);
+        },
+        presence: (presenceEvent) => {
+            //Handle presence
+        }
+    };
+    pubnub.addListener(listener);
+
+    //subscribe to a channel
+    pubnub.subscribe({channels: [myChannel]});
+};
+const publishMessage = async (message) => {
+    const publishPayload = {
+        channel : myChannel,
+        message: {
+            title: "Sensor values",
+            description: message
+        }
+    };
+    await pubnub.publish(publishPayload);
+}
 function keepAlive()
 {
 	fetch('/keep_alive')
