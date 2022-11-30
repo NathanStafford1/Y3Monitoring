@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_mysqldb import MySQL
-
+import json
 app = Flask(__name__)
+alive = 0
+data = {}
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = "root"
@@ -108,6 +110,16 @@ def addCamera():
     elif request.method == 'POST':
         message = 'Please fill out form!'
     return render_template('index.html', message = message)
+
+@app.route("/keep_alive")
+def keep_alive():
+    global alive, data
+    alive += 1
+    keep_alive_count = str(alive)
+    data['keep_alive'] = keep_alive_count
+    parsed_json = json.dumps(data)
+    print(parsed_json)
+    return str(parsed_json)
 
 @app.route("/logout")
 def logout():
