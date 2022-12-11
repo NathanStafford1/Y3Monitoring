@@ -67,30 +67,8 @@ def register():
         message = 'Please fill out form!'
     return render_template('signup.html', message = message)
 
-# @app.route('/forgotPassword', methods =['GET', 'POST'])
-# def forgotPassword():
-#     message = ''
-#     if request.method == 'POST' and 'password' in request.form and 'email' in request.form:
-#         password = request.form['password']
-#         email = request.form['email']
-#         cursor = mysql.connection.cursor()
-#         cursor.execute('SELECT * FROM users WHERE email = % s', (email,))
-#         user = cursor.fetchone()
-#         if user:
-#             message = 'Account exists!'
-#         elif not password or not email:
-#             message = 'Please fill out form!'
-#         else:
-#             cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (email, password))
-#             mysql.connection.commit()
-#             cursor.close()
-#             message = 'You have registered!'
-#     elif request.method == 'POST':
-#         message = 'Please fill out form!'
-#     return render_template('message.html', message = message)
-
-@app.route('/addCamera', methods =['GET', 'POST'])
-def addCamera():
+@app.route('/addHomePod', methods =['GET', 'POST'])
+def addHomePod():
     message = ''
     if request.method == 'POST' and 'ip' in request.form and 'location' in request.form:
         ip = request.form['ip']
@@ -99,14 +77,16 @@ def addCamera():
         cursor.execute('SELECT * FROM users WHERE ip = % s', (ip,))
         camera = cursor.fetchone()
         if camera:
-            message = 'Camera exists!'
+            message = 'HomePod already Added!'
         elif not ip or not location:
             message = 'Please fill out form!'
         else:
-            cursor.execute('INSERT INTO camera VALUES (NULL, %s, %s)', (ip, location))
+            cursor.execute('INSERT INTO camera_sensor VALUES (NULL, %s, %s)', (ip, location))
+            cursor.execute('INSERT INTO motion_sensor VALUES (NULL, %s, %s)', (ip, location))
+            cursor.execute('INSERT INTO sound_sensor VALUES (NULL, %s, %s)', (ip, location))
             mysql.connection.commit()
             cursor.close()
-            message = 'You have added the camera!'
+            message = 'You have added the Homepod!'
     elif request.method == 'POST':
         message = 'Please fill out form!'
     return render_template('index.html', message = message)
