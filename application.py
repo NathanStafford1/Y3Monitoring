@@ -1,9 +1,20 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_mysqldb import MySQL
 import json
+from flask_sqlalchemy import SQLAlchemy
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
+from pip._vendor import cachecontrol
+import google.auth.transport.requests
+import os
+import pathlib
+
 app = Flask(__name__)
+
 alive = 0
 data = {}
+
+#db = SQLAlchemy(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = "root"
@@ -12,12 +23,68 @@ app.config['MYSQL_DB'] = 'y3monitoring'
 
 mysql = MySQL(app)
 
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:NDTJ9876!@localhost/y3monitoring"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://localhost"
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+#GOOGLE_CLIENT_ID = "10191242350-p4had4h1o1s7jq78keq9psl6fnqjfitd.apps.googleusercontent.com"
+
+#client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
+
+# flow = Flow.from_client_secrets_file(
+#     client_secrets_file=client_secrets_file,
+#     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+#     redirect_uri="https://127.0.0.1:5000/callback"
+# )
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
         return render_template("index.html")
     elif request.method == "POST":
         return render_template("greet.html")
+
+@app.route("/googlelogin")
+def googlelogin():
+    authorization_url, state = flow.authorization_url()
+    session["state"] = state
+    return redirect(authorization_url)
+
+def login_required(function):
+    def wrapper(*args, **kwargs):
+        if "google_id" not in session:
+            return abort(401) # Authorization required
+        else:
+            return function()
+    return wrapper
+
+@app.route("/callback")
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session["state"] == request.args["state"]:
+        abort(500)
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=GOOGLE_CLIENT_ID
+    )
+
+    session["google_id"] = id_info.get("sub")
+    session["name"] = id_info.get("name")
+    return redirect("/secure_area")
+
+@app.route("/secure_area")
+@login_required
+def secure_area():
+    my_db.add_user_and_login(session["name"], session["google_id"])
+    return render_template("index.html", user_id=session["google_id"], online_users=my_db.get_all_logged_in_users())
 
 @app.route("/login", methods=["GET","POST"])
 def login():
