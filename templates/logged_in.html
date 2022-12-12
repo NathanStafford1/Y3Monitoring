@@ -196,9 +196,6 @@
                             <label id="buzzer_on">Buzzer On</label>
                         </div>
                     </body>
-                    <!--<div class="col-sm-8 col-md-6">
-                        <img  src="{{ url_for('video_feed') }}">
-                    </div>-->
                 </div>
             </div>
         </section>
@@ -279,31 +276,19 @@ I built this slider when I first started to learn JS, you can rebuild it with mo
                         <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body border-0 p-4">
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <form method="post" action = "/addHomePod" data-sb-form-api-token="API_TOKEN">
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="name">Camera IP</label>
+                                <input class="form-control" id="ip" name="ip" type="text" data-sb-validations="required" />
+                                <label for="ip">Camera IP</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Camera IP is required.</div>
                             </div>
-                            <!-- Email address input-->
+                            <!-- Location input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                <label for="email">Port</label>
+                                <input class="form-control" id="location" name="location" type="text" placeholder="name@example.com" data-sb-validations="required,email" />
+                                <label for="location">Location in home</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">The Port is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Port is not valid.</div>
-                            </div>
-                            <!-- Phone number input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                                <label for="phone">Name Of Your Camera</label>
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">Camera name is required.</div>
-                            </div>
-                            <!-- Message input-->
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                                <label for="message">Purpose</label>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                             </div>
                             <!-- Submit success message-->
                             <!---->
@@ -311,15 +296,14 @@ I built this slider when I first started to learn JS, you can rebuild it with mo
                             <!-- has successfully submitted-->
                             <div class="d-none" id="submitSuccessMessage">
                                 <div class="text-center mb-3">
-                                    <div class="fw-bolder">Camera has been added successful!</div>
+                                    <div class="fw-bolder">HomePod has been added successful!</div>
                                     To activate this form, sign up at
                                     <br />
                                     <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                                 </div>
                             </div>
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                             <!-- Submit Button-->
-                            <div class="d-grid"><button class="btn btn-primary rounded-pill btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
+                            <div class="d-grid"><button value="addHomePod" class="btn btn-primary rounded-pill btn-lg" id="submitButton" type="submit">Submit</button></div>
                         </form>
                     </div>
                 </div>

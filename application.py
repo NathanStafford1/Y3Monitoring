@@ -44,11 +44,11 @@ def index():
     elif request.method == "POST":
         return render_template("greet.html")
 
-@app.route("/googlelogin")
-def googlelogin():
-    authorization_url, state = flow.authorization_url()
-    session["state"] = state
-    return redirect(authorization_url)
+# @app.route("/googlelogin")
+# def googlelogin():
+#     authorization_url, state = flow.authorization_url()
+#     session["state"] = state
+#     return redirect(authorization_url)
 
 def login_required(function):
     def wrapper(*args, **kwargs):
@@ -141,19 +141,20 @@ def addHomePod():
         ip = request.form['ip']
         location = request.form['location']
         cursor = mysql.connection.cursor()
-        cursor.execute('SELECT * FROM users WHERE ip = % s', (ip,))
-        camera = cursor.fetchone()
-        if camera:
+        cursor.execute('SELECT * FROM camera WHERE ip = % s', (ip,))
+        sensors = cursor.fetchone()
+        if sensors:
             message = 'HomePod already Added!'
         elif not ip or not location:
             message = 'Please fill out form!'
         else:
-            cursor.execute('INSERT INTO camera_sensor VALUES (NULL, %s, %s)', (ip, location))
+            cursor.execute('INSERT INTO camera VALUES (NULL, %s, %s)', (ip, location))
             cursor.execute('INSERT INTO motion_sensor VALUES (NULL, %s, %s)', (ip, location))
             cursor.execute('INSERT INTO sound_sensor VALUES (NULL, %s, %s)', (ip, location))
             mysql.connection.commit()
             cursor.close()
             message = 'You have added the Homepod!'
+            return render_template('logged_in.html', message=message)
     elif request.method == 'POST':
         message = 'Please fill out form!'
     return render_template('index.html', message = message)
