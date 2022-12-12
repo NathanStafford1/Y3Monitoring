@@ -1,11 +1,11 @@
 drop DATABASE y3monitoring;
 create database y3monitoring;
 create table users(user_id int AUTO_INCREMENT,email varchar(50) not null,password varchar(30) not null, PRIMARY KEY(user_id));
-create table camera(camera_id int, location varchar(30), PRIMARY KEY(camera_id));
-create table motion_sensor(motion_sensor_id int, location varchar(30), PRIMARY KEY(motion_sensor_id));
+create table camera(camera_id int AUTO_INCREMENT, location varchar(30), PRIMARY KEY(camera_id));
+create table motion_sensor(motion_sensor_id int AUTO_INCREMENT, location varchar(30), PRIMARY KEY(motion_sensor_id));
 create TABLE motions(motion_id int,motion_sensor_id int, motion_time time, motion_date date,PRIMARY KEY(motion_id), FOREIGN KEY(motion_sensor_id) REFERENCES motion_sensor(motion_sensor_id));
 create table camera_captures(picture_id int, camera_id int,picture varbinary(100000), picture_time time, picture_date date, PRIMARY KEY(picture_id), FOREIGN KEY(camera_id) REFERENCES camera(camera_id));
-create table sound_sensor(sound_sensor_id int, location varchar(30), PRIMARY KEY(sound_sensor_id));
+create table sound_sensor(sound_sensor_id int AUTO_INCREMENT, location varchar(30), PRIMARY KEY(sound_sensor_id));
 create table sounds(sound_id int, sound_sensor_id int,sound varbinary(100000), sound_time time, sound_date date, primary key(sound_id), FOREIGN KEY(sound_sensor_id) REFERENCES sound_sensor(sound_sensor_id));
 
 #Camera#
