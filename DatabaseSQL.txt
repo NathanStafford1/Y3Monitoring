@@ -1,6 +1,6 @@
 drop DATABASE y3monitoring;
 create database y3monitoring;
-create table users(user_id int,email varchar(50) not null,password varchar(30) not null, PRIMARY KEY(user_id));
+create table users(user_id int AUTO_INCREMENT,email varchar(50) not null,password varchar(30) not null, PRIMARY KEY(user_id));
 create table camera(camera_id int, location varchar(30), PRIMARY KEY(camera_id));
 create table motion_sensor(motion_sensor_id int, location varchar(30), PRIMARY KEY(motion_sensor_id));
 create TABLE motions(motion_id int,motion_sensor_id int, motion_time time, motion_date date,PRIMARY KEY(motion_id), FOREIGN KEY(motion_sensor_id) REFERENCES motion_sensor(motion_sensor_id));
