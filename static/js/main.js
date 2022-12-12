@@ -66,6 +66,31 @@ function keepAlive()
 	setTimeout('keepAlive()', heartbeatRate);
 }
 
+function live_video()
+{
+	fetch('/live_video')
+	.then(response=>{
+		if(response.ok){
+			let date = new Date();
+			aliveSecond = date.getTime();
+			return response.json();
+		}
+		throw new Error("Camera offline")
+	})
+	.then(responseJson => {
+		if(responseJson.motion == 1){
+			document.getElementById("camera_id").innerHTML = "Camera is live";
+		}
+		else
+		{
+
+			document.getElementById("motion_id").innerHTML = "Camera is dead";
+		}
+
+		console.log(responseJson)})
+	.catch(error => console.log(error));
+	setTimeout('live_video()', heartbeatRate);
+}
 function time()
 {
 	let d = new Date();
@@ -82,6 +107,22 @@ function time()
 	}
 	setTimeout('time()', 1000);
 }
+function cameraTime()
+{
+	let d = new Date();
+	let currentSec = d.getTime();
+	console.log(currentSec - aliveSecond)
+	if(currentSec - aliveSecond > heartbeatRate + 1000)
+	{
+
+		document.getElementById("camera_connection_id").innerHTML = "DEAD";
+	}
+	else
+	{
+		document.getElementById("camera_connection_id").innerHTML = "ALIVE";
+	}
+	setTimeout('time()', 1000);
+}
 function handleClick(cb){
 	if(cb.checked){
 		value = "ON";
@@ -89,4 +130,12 @@ function handleClick(cb){
 		value = "OFF";
 	}
 	publishMessage(cb.id+"-"+value);
+}
+function handleClick(cam){
+	if(cam.checked){
+		value = "ON";
+	}else{
+		value = "OFF";
+	}
+	publishMessage(cam.id+"-"+value);
 }

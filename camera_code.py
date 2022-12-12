@@ -21,8 +21,9 @@ my_channel = 'davidmccabe'
 sensors_list=["camera"]
 data={}
 
-global grey
+global grey, capture
 grey = 0
+capture = 0
 # make shots directory to save pics
 try:
     os.mkdir('./shots')
@@ -70,6 +71,11 @@ def gen_frames():  # generate frame by frame from camera
         if success:
             if (grey):
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            if (capture):
+                capture = 0
+                now = datetime.datetime.now()
+                p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":", ''))])
+                cv2.imwrite(p, frame)
             try:
                 ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
                 frame = buffer.tobytes()
@@ -80,15 +86,10 @@ def gen_frames():  # generate frame by frame from camera
 
         else:
             pass
-@app.route('/')
-def index():
-    return render_template('working_cam.html')
-
 
 @app.route('/video_feed')
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port='5000', debug=False)
