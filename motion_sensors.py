@@ -1,19 +1,19 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import time, threading
 
 from pubnub.callbacks import SubscribeCallback
 from pubnub.enums import PNStatusCategory, PNOperationType
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub
+
 pnconfig = PNConfiguration()
-pnconfig.subscribe_key = 'sub-c-506b01b6-ba97-400b-ae41-3ff9bacfbe6b'
-pnconfig.publish_key = 'pub-c-714335a5-973b-4a41-aee8-522aa8226163'
-pnconfig.user_id = "Jack-device"
+
+pnconfig.subscribe_key = 'sub-c-6ed21369-a5b3-4a8b-b9a6-3a225ce51275'
+pnconfig.publish_key = 'pub-c-0abc1efe-4b78-4cdc-a195-fc1ebc33eaac'
+pnconfig.user_id = "david"
 pubnub = PubNub(pnconfig)
 
-my_channel = 'tanish_computer'
-sensors_list=["buzzer"]
-data={}
+my_channel = "davidmccabe"
 
 def my_publish_callback(envelope, status):
     # Check whether request successfully completed or not
@@ -26,6 +26,7 @@ def my_publish_callback(envelope, status):
 class MySubscribeCallback(SubscribeCallback):
     def presence(self, pubnub, presence):
         pass  # handle incoming presence data
+
     def status(self, pubnub, status):
         if status.category == PNStatusCategory.PNUnexpectedDisconnectCategory:
             pass  # This event happens when radio / connectivity is lost
@@ -33,7 +34,7 @@ class MySubscribeCallback(SubscribeCallback):
             # Connect event. You can do stuff like publish, and know you'll get it.
             # Or just use the connected event to confirm you are subscribed for
             # UI / internal notifications, etc
-            pubnub.publish().channel(my_channel).message('Hello world!').pn_async(my_publish_callback)
+            pubnub.publish().channel('sergejs_sd3b_pi_channel').message('Finnaly Connected, Hello World !').pn_async(my_publish_callback)
         elif status.category == PNStatusCategory.PNReconnectedCategory:
             pass
             # Happens as part of our regular operation. This event happens when
@@ -46,12 +47,15 @@ class MySubscribeCallback(SubscribeCallback):
         # Handle new message stored in message.message
         print(message.message)
 
+
+pubnub.add_listener(MySubscribeCallback())
+pubnub.subscribe().channels('davidmccabe').execute()
+
 PIR_pin = 23
 Buzzer_pin = 24
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-
 GPIO.setup(PIR_pin, GPIO.IN)
 GPIO.setup(Buzzer_pin, GPIO.OUT)
 
@@ -62,13 +66,13 @@ def beep(repeat):
             time.sleep(0.001)
             GPIO.output(Buzzer_pin, False)
             time.sleep(0.001)
-        time.sleep(0.02)
-
+        time.sleep(0.001)
 
 def motion_detection():
-    while(True):
+    while True:
         if GPIO.input(PIR_pin):
             print("Motion detected")
+            pubnub.publish().channel('davidmccabe').message('motion_detected').pn_async(my_publish_callback)
             beep(4)
         time.sleep(1)
 

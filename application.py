@@ -168,7 +168,15 @@ def keep_alive():
     parsed_json = json.dumps(data)
     print(parsed_json)
     return str(parsed_json)
-
+@app.route("/live_video")
+def live_video():
+    global alive, data
+    alive += 1
+    live_video_count = str(alive)
+    data['live_video'] = live_video_count
+    parsed_json = json.dumps(data)
+    print(parsed_json)
+    return str(parsed_json)
 @app.route("/logout")
 def logout():
     return render_template("index.html")
