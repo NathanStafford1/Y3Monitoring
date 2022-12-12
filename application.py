@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_mysqldb import MySQL
 import json
+import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
@@ -93,13 +94,17 @@ def login():
         email = request.form['email']
         password = request.form['password']
         cursor = mysql.connection.cursor()
-        cursor.execute('SELECT * FROM users WHERE email = %s AND password = %s', (email,password,))
+        cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
         user = cursor.fetchone()
 
         if user:
-            # hashed = user['password']
-            # bcrypt.checkpw(password, hashed);
-            message = 'Logged in successfully !'
+            realPassword = user[2]
+
+            userBytes = password.encode('ascii')
+
+            check = bcrypt.checkpw(userBytes, realPassword.encode('ascii'))
+            print(check)
+
             return render_template('logged_in.html')
         else:
             message = 'Incorrect email / password !'
@@ -122,10 +127,12 @@ def register():
             message = 'Please fill out form!'
             return render_template('signup.html', message=message)
         else:
-            # Hashing the password
-            # salt = bcrypt.gensalt()
-            # password = bcrypt.hashpw(password.encode('utf-8'), salt)
-            cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (email, password))
+            bytes = password.encode('ascii')
+
+            salt = bcrypt.gensalt()
+
+            hash = bcrypt.hashpw(bytes, salt)
+            cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (email, hash))
             mysql.connection.commit()
             cursor.close()
             message = 'You have registered!'
