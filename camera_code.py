@@ -18,7 +18,7 @@ pnconfig.user_id = "david"
 pubnub = PubNub(pnconfig)
 
 my_channel = 'davidmccabe'
-sensors_list=["buzzer"]
+sensors_list=["camera"]
 data={}
 
 global grey
@@ -90,9 +90,13 @@ def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port='5000', debug=False)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000', debug=False)
-
+    sensors_thread = threading.Thread(target=video_feed)
+    sensors_thread.start()
+    pubnub.add_listener(MySubscribeCallback())
+    pubnub.subscribe().channels(my_channel).execute()
 camera.release()
 cv2.destroyAllWindows()
 
@@ -100,34 +104,34 @@ cv2.destroyAllWindows()
 
 
 
-PIR_pin = 23
-Buzzer_pin = 24
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(PIR_pin, GPIO.IN)
-GPIO.setup(Buzzer_pin, GPIO.OUT)
-
-def beep(repeat):
-    for i in range(0, repeat):
-        for pulse in range(60):
-            GPIO.output(Buzzer_pin, True)
-            time.sleep(0.001)
-            GPIO.output(Buzzer_pin, False)
-            time.sleep(0.001)
-        time.sleep(0.02)
-
-
-def motion_detection():
-    while(True):
-        if GPIO.input(PIR_pin):
-            print("Motion detected")
-            beep(4)
-        time.sleep(1)
-
-if __name__ == '__main__':
-    sensors_thread = threading.Thread(target=motion_detection)
-    sensors_thread.start()
-    pubnub.add_listener(MySubscribeCallback())
-    pubnub.subscribe().channels(my_channel).execute()
+# PIR_pin = 23
+# Buzzer_pin = 24
+#
+# GPIO.setwarnings(False)
+# GPIO.setmode(GPIO.BCM)
+#
+# GPIO.setup(PIR_pin, GPIO.IN)
+# GPIO.setup(Buzzer_pin, GPIO.OUT)
+#
+# def beep(repeat):
+#     for i in range(0, repeat):
+#         for pulse in range(60):
+#             GPIO.output(Buzzer_pin, True)
+#             time.sleep(0.001)
+#             GPIO.output(Buzzer_pin, False)
+#             time.sleep(0.001)
+#         time.sleep(0.02)
+#
+#
+# def motion_detection():
+#     while(True):
+#         if GPIO.input(PIR_pin):
+#             print("Motion detected")
+#             beep(4)
+#         time.sleep(1)
+#
+# if __name__ == '__main__':
+#     sensors_thread = threading.Thread(target=motion_detection)
+#     sensors_thread.start()
+#     pubnub.add_listener(MySubscribeCallback())
+#     pubnub.subscribe().channels(my_channel).execute()
