@@ -195,6 +195,8 @@
                             <input type="checkbox" id="buzzer" onclick="handleClick(this);"/>
                             <label id="buzzer_on">Buzzer On</label>
                         </div>
+                    </body>
+                    <body onload="live_video(); cameraTime(); setupPubNub();">
                     <h1> Camera Online </h1>
                         <h2>Connection: <span id="camera_connection_id">...</span></h2>
                         <h2>Is camera live: <span id="camera_id">...</span></h2>

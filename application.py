@@ -13,6 +13,8 @@ import pathlib
 app = Flask(__name__)
 
 alive = 0
+camalive = 0
+camdata = {}
 data = {}
 
 #db = SQLAlchemy(app)
@@ -177,11 +179,11 @@ def keep_alive():
     return str(parsed_json)
 @app.route("/live_video")
 def live_video():
-    global alive, data
-    alive += 1
-    live_video_count = str(alive)
-    data['live_video'] = live_video_count
-    parsed_json = json.dumps(data)
+    global camalive, camdata
+    camalive += 1
+    live_video_count = str(camalive)
+    camdata['live_video'] = live_video_count
+    parsed_json = json.dumps(camdata)
     print(parsed_json)
     return str(parsed_json)
 @app.route("/logout")

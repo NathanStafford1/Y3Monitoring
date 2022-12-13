@@ -90,6 +90,11 @@ def gen_frames():  # generate frame by frame from camera
 @app.route('/video_feed')
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    while True:
+        if video_feed:
+            print("Camera Online")
+            pubnub.publish().channel('davidmccabe').message('camera_online').pn_async(my_publish_callback)
+        time.sleep(1)
 
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port='5000', debug=False)

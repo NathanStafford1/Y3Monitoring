@@ -84,7 +84,7 @@ function live_video()
 		else
 		{
 
-			document.getElementById("motion_id").innerHTML = "Camera is dead";
+			document.getElementById("camera_id").innerHTML = "Camera is dead";
 		}
 
 		console.log(responseJson)})
