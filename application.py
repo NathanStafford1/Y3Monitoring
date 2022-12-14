@@ -186,6 +186,7 @@ def live_video():
     parsed_json = json.dumps(camdata)
     print(parsed_json)
     return str(parsed_json)
+
 @app.route("/logout")
 def logout():
     return render_template("index.html")

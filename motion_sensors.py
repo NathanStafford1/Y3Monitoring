@@ -1,11 +1,14 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time, threading
-
+import cv2
+import datetime, time
+import os, sys
+import numpy as np
 from pubnub.callbacks import SubscribeCallback
 from pubnub.enums import PNStatusCategory, PNOperationType
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub
-
+from threading import Thread
 pnconfig = PNConfiguration()
 
 pnconfig.subscribe_key = 'sub-c-6ed21369-a5b3-4a8b-b9a6-3a225ce51275'
@@ -14,7 +17,13 @@ pnconfig.user_id = "david"
 pubnub = PubNub(pnconfig)
 
 my_channel = "davidmccabe"
-
+try:
+    os.mkdir('./shots')
+except OSError as error:
+    pass
+camera = cv2.VideoCapture(0)
+global capture
+capture = 0
 def my_publish_callback(envelope, status):
     # Check whether request successfully completed or not
     if not status.is_error():
@@ -70,11 +79,20 @@ def beep(repeat):
 
 def motion_detection():
     while True:
+        global capture
+        global out, capture, rec_frame
         if GPIO.input(PIR_pin):
-            print("Motion detected")
             pubnub.publish().channel('davidmccabe').message('motion_detected').pn_async(my_publish_callback)
+            print("Motion detected")
             beep(4)
-        time.sleep(1)
+            time.sleep(1)
+            success, frame = camera.read()
+            if success:
+                capture = 0
+                now = datetime.datetime.now()
+                p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":", ''))])
+                print("Picture taken detected")
+                cv2.imwrite(p, frame)
 
 if __name__ == '__main__':
     sensors_thread = threading.Thread(target=motion_detection)

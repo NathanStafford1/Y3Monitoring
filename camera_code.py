@@ -52,7 +52,7 @@ class MySubscribeCallback(SubscribeCallback):
             # Connect event. You can do stuff like publish, and know you'll get it.
             # Or just use the connected event to confirm you are subscribed for
             # UI / internal notifications, etc
-            pubnub.publish().channel(my_channel).message('Hello world!').pn_async(my_publish_callback)
+            pubnub.publish().channel(my_channel).message('Camera Hello!').pn_async(my_publish_callback)
         elif status.category == PNStatusCategory.PNReconnectedCategory:
             pass
             # Happens as part of our regular operation. This event happens when
@@ -83,32 +83,59 @@ def gen_frames():  # generate frame by frame from camera
                        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
             except Exception as e:
                 pass
-
         else:
             pass
 
+
+
+#@app.route('/video_feed')
+#def video_feed():
+#    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 @app.route('/video_feed')
 def video_feed():
+    print("camera_live")
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    while True:
-        if video_feed:
-            print("Camera Online")
-            pubnub.publish().channel('davidmccabe').message('camera_online').pn_async(my_publish_callback)
-        time.sleep(1)
+@app.route('/requests', methods=['POST', 'GET'])
+def tasks():
+    global switch, camera
+    if request.method == 'POST':
+        if request.form.get('click') == 'Capture':
+            global capture
+            capture = 1
+        elif request.form.get('stop') == 'Stop/Start':
 
-# if __name__ == '__main__':
+            if (switch == 1):
+                switch = 0
+                camera.release()
+                cv2.destroyAllWindows()
+
+            else:
+                camera = cv2.VideoCapture(0)
+                switch = 1
+        elif request.form.get('rec') == 'Start/Stop Recording':
+            global rec, out
+            rec = not rec
+            if (rec):
+                now = datetime.datetime.now()
+                fourcc = cv2.VideoWriter_fourcc(*'XVID')
+                out = cv2.VideoWriter('vid_{}.avi'.format(str(now).replace(":", '')), fourcc, 20.0, (640, 480))
+                # Start new thread for recording the video
+                thread = Thread(target=record, args=[out, ])
+                thread.start()
+            elif (rec == False):
+                out.release()
+
+
+    elif request.method == 'GET':
+        if __name__ == '__main__':
+            sensors_thread = threading.Thread(target=video_feed)
+            sensors_thread.start()
+            pubnub.add_listener(MySubscribeCallback())
+            pubnub.subscribe().channels(my_channel).execute()
+#if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port='5000', debug=False)
-if __name__ == '__main__':
-    sensors_thread = threading.Thread(target=video_feed)
-    sensors_thread.start()
-    pubnub.add_listener(MySubscribeCallback())
-    pubnub.subscribe().channels(my_channel).execute()
 camera.release()
 cv2.destroyAllWindows()
-
-
-
-
 
 # PIR_pin = 23
 # Buzzer_pin = 24
