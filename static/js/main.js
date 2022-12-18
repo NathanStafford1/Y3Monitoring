@@ -7,8 +7,8 @@ let pubnub;
 
 const setupPubNub = () =>{
     pubnub = new PubNub({
-        publishKey: 'pub-c-0abc1efe-4b78-4cdc-a195-fc1ebc33eaac',
-        subscribeKey: 'sub-c-6ed21369-a5b3-4a8b-b9a6-3a225ce51275',
+        publishKey: 'pub-c-19b856c0-ef40-45d0-84cb-29808b5e254d',
+        subscribeKey: 'sub-c-f4d46f9b-7c4c-4638-a39e-b7cc8f2a9dca',
         userId: "david"
     });
 
@@ -19,7 +19,13 @@ const setupPubNub = () =>{
             }
         },
         message: (messageEvent) => {
-            console.log(messageEvent);
+
+            console.log(messageEvent.message);
+            console.log(messageEvent.timetoken);
+            current_message = messageEvent.message;
+
+            document.getElementById("motion_id").innerHTML = "Motion Detected";
+            previous_message = current_message;
         },
         presence: (presenceEvent) => {
             //Handle presence
