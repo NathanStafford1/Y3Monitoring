@@ -11,8 +11,8 @@ from pubnub.pubnub import PubNub
 from threading import Thread
 pnconfig = PNConfiguration()
 
-pnconfig.subscribe_key = 'sub-c-6ed21369-a5b3-4a8b-b9a6-3a225ce51275'
-pnconfig.publish_key = 'pub-c-0abc1efe-4b78-4cdc-a195-fc1ebc33eaac'
+pnconfig.subscribe_key = 'sub-c-f4d46f9b-7c4c-4638-a39e-b7cc8f2a9dca'
+pnconfig.publish_key = 'pub-c-19b856c0-ef40-45d0-84cb-29808b5e254d'
 pnconfig.user_id = "david"
 pubnub = PubNub(pnconfig)
 

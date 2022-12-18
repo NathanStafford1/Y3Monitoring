@@ -18,7 +18,14 @@
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/testim.css') }}">
     </head>
-    <body id="page-top">
+    <body id="page-top" onload="keepAlive(); time(); setupPubNub();">
+	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.0.js"></script>
+<!--		<div>-->
+<!--		<script src="static/js/main.js"></script>-->
+<!--		<h1> Online </h1>-->
+<!--		<h2>Connection: <span id="Connection_id">...</span></h2>-->
+<!--		<h2>Motion: <span id="motion_id">...</span></h2>-->
+<!--		</div>-->
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
             <div class="container px-5">
@@ -103,7 +110,13 @@
                     </div>
                 </div>
             </div>
+            	<div>
+		<script src="static/js/main.js"></script>
+		<h2><span id="Connection_id">...</span></h2>
+		<h2>Kitchen: <span id="motion_id">...</span></h2>
+		</div>
         </aside>
+
         <!-- App features section-->
         <section id="features">
             <div class="container px-5">
@@ -183,17 +196,8 @@
                         <p class="lead fw-normal text-muted mb-5 mb-lg-0">Camera Has Detected Movement - 5min Ago</p>
 <!--                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" width="50px" height="50px">Enable Motion Sensor</input>-->
                     </div>
-                    <body onload="keepAlive(); time(); setupPubNub();">
-                        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.0.js"></script>
-                        <script src="static/js/main.js"></script>
-                        <h1> Online </h1>
-                        <h2>Connection: <span id="Connection_id">...</span></h2>
-                        <h2>Motion: <span id="motion_id">...</span></h2>
-                        <div>
-                            <input type="checkbox" id="buzzer" onclick="handleClick(this);"/>
-                            <label id="buzzer_on">Buzzer On</label>
-                        </div>
-                    </body>
+
+
                     <body onload="live_video(); cameraTime(); setupPubNub();">
                     <h1> Camera Online </h1>
                         <h2>Connection: <span id="camera_connection_id">...</span></h2>
