@@ -96,28 +96,8 @@ def gen_frames():  # generate frame by frame from camera
         else:
             pass
 def gen_frames():  # generate frame by frame from camera
-    global out, capture, rec_frame
+    global out, rec_frame
     while True:
-        success, frame = camera.read()
-        if success:
-            if (face):
-                frame = detect_face(frame)
-            if (grey):
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            if (neg):
-                frame = cv2.bitwise_not(frame)
-            if (capture):
-                capture = 0
-                now = datetime.datetime.now()
-                p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":", ''))])
-                cv2.imwrite(p, frame)
-
-            if (rec):
-                rec_frame = frame
-                frame = cv2.putText(cv2.flip(frame, 1), "Recording...", (0, 25), cv2.FONT_HERSHEY_SIMPLEX, 1,
-                                    (0, 0, 255), 4)
-                frame = cv2.flip(frame, 1)
-
             try:
                 ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
                 frame = buffer.tobytes()
@@ -125,18 +105,10 @@ def gen_frames():  # generate frame by frame from camera
                        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
             except Exception as e:
                 pass
-
-        else:
-            pass
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-@app.route('/video_feed')
+            else:
+                pass
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-@app.route('/requests', methods=['POST', 'GET'])
 def tasks():
     global switch, camera
     if request.method == 'POST':
@@ -185,6 +157,7 @@ def motion_detection():
                 p = os.path.sep.join(['shots', "shot_{}.png".format(str(now).replace(":", ''))])
                 print("Picture taken detected")
                 cv2.imwrite(p, frame)
+
 
 if __name__ == '__main__':
     sensors_thread = threading.Thread(target=motion_detection)

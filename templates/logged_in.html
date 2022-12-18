@@ -180,34 +180,37 @@
                 <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
                     <div class="col-12 col-lg-5">
                         <h2 class="display-4 lh-1 mb-4">Activity Logs</h2>
-                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">Camera Has Detected Movement - 1min Ago</p>
-                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">Camera Has Detected Movement - 2min Ago</p>
-                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">Camera Has Detected Movement - 5min Ago</p>
+                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">Hallway - Motion Activated - 10min Ago</p>
+                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">Kitchen - Motion Activated - 5min Ago</p>
+<!--                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">Camera Has Detected Movement - 5min Ago</p>-->
 <!--                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" width="50px" height="50px">Enable Motion Sensor</input>-->
                     </div>
-                    <body onload="keepAlive(); time(); setupPubNub();">
-                        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.0.js"></script>
-                        <script src="static/js/main.js"></script>
-                        <h1> Online </h1>
-                        <h2>Connection: <span id="Connection_id">...</span></h2>
-                        <h2>Motion: <span id="motion_id">...</span></h2>
-                        <div>
-                            <input type="checkbox" id="buzzer" onclick="handleClick(this);"/>
-                            <label id="buzzer_on">Buzzer On</label>
-                        </div>
-                    </body>
-                    <body onload="live_video(); cameraTime(); setupPubNub();">
-                    <h1> Camera Online </h1>
-                        <h2>Connection: <span id="camera_connection_id">...</span></h2>
-                        <h2>Is camera live: <span id="camera_id">...</span></h2>
-                        <div>
-                            <img src="{{ url_for('live_video') }}" height="80%"/>
-                            <input type="submit" value="Stop/Start" name="stop" />
-                            <input type="submit" value="Capture" name="click"/>
-                            <input type="submit" value="Face Only" name="face" />
-                            <input type="submit" value="Start/Stop Recording" name="rec" />
-                        </div>
-                    </body>
+                       <div class="col-sm-8 col-md-6">
+                        <img class="device" src="static/imgs/davids.png" height="300px" width="500px">
+                    </div>
+<!--                    <body onload="keepAlive(); time(); setupPubNub();">-->
+<!--                        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.0.js"></script>-->
+<!--                        <script src="static/js/main.js"></script>-->
+<!--                        <h1> Online </h1>-->
+<!--                        <h2>Connection: <span id="Connection_id">...</span></h2>-->
+<!--                        <h2>Motion: <span id="motion_id">...</span></h2>-->
+<!--                        <div>-->
+<!--                            <input type="checkbox" id="buzzer" onclick="handleClick(this);"/>-->
+<!--                            <label id="buzzer_on">Buzzer On</label>-->
+<!--                        </div>-->
+<!--                    </body>-->
+<!--                    <body onload="live_video(); cameraTime(); setupPubNub();">-->
+<!--                    <h1> Camera Online </h1>-->
+<!--                        <h2>Connection: <span id="camera_connection_id">...</span></h2>-->
+<!--                        <h2>Is camera live: <span id="camera_id">...</span></h2>-->
+<!--                        <div>-->
+<!--                            <img src="{{ url_for('live_video') }}" height="80%"/>-->
+<!--                            <input type="submit" value="Stop/Start" name="stop" />-->
+<!--                            <input type="submit" value="Capture" name="click"/>-->
+<!--                            <input type="submit" value="Face Only" name="face" />-->
+<!--                            <input type="submit" value="Start/Stop Recording" name="rec" />-->
+<!--                        </div>-->
+<!--                    </body>-->
                 </div>
             </div>
         </section>
