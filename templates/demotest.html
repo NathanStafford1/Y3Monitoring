@@ -1,0 +1,302 @@
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Y3 Monitoring</title>
+        <link rel= "icon" type="image/x-icon" href= "{{ url_for('static',filename='assests/favicon.ico') }}">
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/testim.css') }}">
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+            <div class="container px-5">
+
+                <img class="navbar-brand fw-bold" src="static/imgs/POM.png" alt="logo" height="100px" width="320px">
+<!--                <div class="h2 fs-1 text-black mb-4">Y3 Monitoring</div>-->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="bi-list"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Features</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="#hardware">Hardware</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3">Logged In</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="/logout">Logout</a></li>
+<!--                         <li class="nav-item"><a action="/camera" value="/camera" href="#camera.html" class="nav-link me-lg-3">Camera</a></li>-->
+                    </ul>
+                    <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                        <span class="d-flex align-items-center">
+                            <i class="bi bi-camera-fill" style="padding-right: 5px"></i>
+                            <span class="small">Add Homepod</span>
+                        </span>
+                    </button>
+
+            </div>
+        </nav>
+        <!-- Mashead header-->
+        <header class="masthead">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-6">
+                        <!-- Mashead text and app badges-->
+                        <div class="mb-5 mb-lg-0 text-center text-lg-start">
+                            <h1 class="display-1 lh-1 mb-3">Peace of Mind.</h1>
+                            <p class="lead fw-normal text-muted mb-5">Launch your mobile to begin your setup! Keep track of things anywhere in the world.</p>
+                            <div class="d-flex flex-column flex-lg-row align-items-center">
+                                <a class="me-lg-3 mb-4 mb-lg-0" href="#!"><img class="app-badge" src="static/imgs/google-play-badge.svg" alt="..." /></a>
+                                <a href="#!"><img class="app-badge" src="static/imgs/app-store-badge.svg" alt="..." /></a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Masthead device mockup feature-->
+                        <div class="masthead-device-mockup">
+                            <svg class="circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="circleGradient" gradientTransform="rotate(45)">
+                                        <stop class="gradient-start-color" offset="0%"></stop>
+                                        <stop class="gradient-end-color" offset="100%"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="50"></circle></svg
+                            ><svg class="shape-1 d-none d-sm-block" viewBox="0 0 240.83 240.83" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(120.42 -49.88) rotate(45)"></rect>
+                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(-49.88 120.42) rotate(-45)"></rect></svg
+                            ><svg class="shape-2 d-none d-sm-block" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                            <div class="device-wrapper">
+                                <img class="device" src="static/imgs/image-removebg-preview.png" alt="logo" height="100%" width="100%">
+<!--                                <div class="device" data-device="iPhoneX" data-orientation="portrait" data-color="black">-->
+<!--                                    <div class="screen bg-black">-->
+<!--                                        &lt;!&ndash; PUT CONTENTS HERE:&ndash;&gt;-->
+<!--                                        &lt;!&ndash; * * This can be a video, image, or just about anything else.&ndash;&gt;-->
+<!--                                        &lt;!&ndash; * * Set the max width of your media to 100% and the height to&ndash;&gt;-->
+<!--                                        &lt;!&ndash; * * 100% like the demo example below.&ndash;&gt;-->
+<!--                                        <video muted="muted" autoplay="" loop="" style="max-width: 100%; height: 100%"><source src="https://www.youtube.com/watch?v=d_NS9Vd1sMA&list=RDd_NS9Vd1sMA&start_radio=1&ab_channel=AustinPost" type="video/mp4" /></video>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <link class="app-badge" href= "{{ url_for('static',filename='assets/img/image-removebg-preview.png') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Quote/testimonial aside-->
+        <aside class="text-center bg-gradient-primary-to-secondary">
+            <div class="container px-5">
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-xl-8">
+                        <div class="h2 fs-1 text-white mb-4">"An intuitive solution to a common problem that we all face, wrapped up in a single app!"</div>
+<!--                        <img src="static/imgs/y3.png" alt="..." height=300px width=1000px/>-->
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- App features section-->
+        <section id="features">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-8 order-lg-1 mb-5 mb-lg-0">
+                        <div class="container-fluid px-5">
+                            <div class="row gx-5">
+                                <div class="col-md-6 mb-5">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-phone icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Device Mockups</h3>
+                                        <p class="text-muted mb-0">Ready to use after download, one simple connection and you're in!</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-camera icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Flexible Use</h3>
+                                        <p class="text-muted mb-0">This product can be used from anywhere in the world.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-5 mb-md-0">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-gift icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Free to Use</h3>
+                                        <p class="text-muted mb-0">Mobile app is free to use!</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-patch-check icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Security</h3>
+                                        <p class="text-muted mb-0">Secure connections.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 order-lg-0">
+                        <!-- Features section device mockup-->
+                        <div class="features-device-mockup">
+                            <svg class="circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="circleGradient" gradientTransform="rotate(45)">
+                                        <stop class="gradient-start-color" offset="0%"></stop>
+                                        <stop class="gradient-end-color" offset="100%"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="50"></circle></svg
+                            ><svg class="shape-1 d-none d-sm-block" viewBox="0 0 240.83 240.83" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(120.42 -49.88) rotate(45)"></rect>
+                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(-49.88 120.42) rotate(-45)"></rect></svg
+                            ><svg class="shape-2 d-none d-sm-block" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                            <div class="device-wrapper">
+                                <img class="device" src="static/imgs/camera.png" alt="logo" height="100%" width="100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Basic features section-->
+		<body>
+			<div class="container">
+    			<form method="post" action="{{ url_for('tasks') }}">
+			<input type="submit" value="Stop/Start" name="stop" />
+			<input type="submit" value="Capture" name="click"/>
+			<input type="submit" value="Start/Stop Recording" name="rec" />
+			</form>
+            		<img src="{{ url_for('video_feed') }}" height="80%">
+		</body>
+
+                <section id="hardware">
+            <section class="bg-light">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+                    <div class="col-12 col-lg-5">
+                        <h2 class="display-4 lh-1 mb-4">Raspberry Pi 4</h2>
+                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">Raspberry Pi is a series of small single-board computers developed in the United Kingdom by the Raspberry Pi Foundation in association with Broadcom. The Raspberry Pi project originally leaned towards the promotion of teaching basic computer science in schools and in developing countries</p>
+                    </div>
+                    <div class="col-sm-8 col-md-6">
+                        <img class="device" src="static/imgs/pi.png" alt="logo" height="100%" width="100%">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-light">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+                    <div class="col-12 col-lg-5">
+                        <h2 class="display-4 lh-1 mb-4">Raspberry Pi Camera Module V2.1</h2>
+                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">The Raspberry Pi Camera Module v2 is the new official camera board released by the Raspberry Pi Foundation.
+
+The Raspberry Pi Camera Module v2 is a high quality 8 megapixel Sony IMX219 image sensor custom designed add-on board for the Raspberry Pi, featuring a fixed focus lens.</p>
+                    </div>
+                    <div class="col-sm-8 col-md-6">
+                        <img class="device" src="static/imgs/camcam.png" alt="logo" height="100%" width="100%">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-light">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+                    <div class="col-12 col-lg-5">
+                        <h2 class="display-4 lh-1 mb-4">Sound Sensor</h2>
+                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">This sensor from Waveshare features both analogue and digital outputs for use with your microcontrollers input pins. The accuracy is adjustable for tweaking the setup for your specific project, and the onboard signal output indicator LED is useful for debugging.</p>
+                    </div>
+                    <div class="col-sm-8 col-md-6">
+                        <img class="device" src="static/imgs/soundcard.png" alt="logo" height="100%" width="100%">
+                    </div>
+                </div>
+            </div>
+        </section>
+        </section>
+
+
+        <!--
+#### EDIT
+I built this slider when I first started to learn JS, you can rebuild it with more readable, simple and less code, I'm too lazy to update it, sorry :)
+-->
+
+<!--
+	use the left and right arrow keys on your keyboard or just swipe left and right on your smart phone to interact with the slider
+-->
+
+
+        <!-- Footer-->
+        <footer class="bg-black text-center py-5">
+            <div class="container px-5">
+                <div class="text-white-50 small">
+                    <div class="mb-2">&copy; Your Website 2022. All Rights Reserved.</div>
+                    <a href="#!">Privacy</a>
+                    <span class="mx-1">&middot;</span>
+                    <a href="#!">Terms</a>
+                    <span class="mx-1">&middot;</span>
+                    <a href="#!">FAQ</a>
+                </div>
+            </div>
+        </footer>
+        <!-- Feedback Modal-->
+        <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-gradient-primary-to-secondary p-4">
+                        <h5 class="modal-title font-alt text-white" id="feedbackModalLabel">Add A HomePod</h5>
+                        <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body border-0 p-4">
+                        <form method="post" action = "/addHomePod" data-sb-form-api-token="API_TOKEN">
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="ip" name="ip" type="text" data-sb-validations="required" />
+                                <label for="ip">Camera IP</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">Camera IP is required.</div>
+                            </div>
+                            <!-- Location input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="location" name="location" type="text" placeholder="name@example.com" data-sb-validations="required,email" />
+                                <label for="location">Location in home</label>
+                                <div class="invalid-feedback" data-sb-feedback="email:required">The Port is required.</div>
+                                <div class="invalid-feedback" data-sb-feedback="email:email">Port is not valid.</div>
+                            </div>
+                            <!-- Submit success message-->
+                            <!---->
+                            <!-- This is what your users will see when the form-->
+                            <!-- has successfully submitted-->
+                            <div class="d-none" id="submitSuccessMessage">
+                                <div class="text-center mb-3">
+                                    <div class="fw-bolder">HomePod has been added successful!</div>
+                                    To activate this form, sign up at
+                                    <br />
+                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                                </div>
+                            </div>
+                            <!-- Submit Button-->
+                            <div class="d-grid"><button value="addHomePod" class="btn btn-primary rounded-pill btn-lg" id="submitButton" type="submit">Submit</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
